@@ -14,6 +14,8 @@ export class GuidGeneratorComponent {
   prefix: string = '';  // Default prefix
   suffix: string = '';  // Default suffix
   guid: string = '';
+  copyButtonText: string = 'Copy to clipboard';
+  isCopied: boolean = false;
 
   constructor(private clipboard: Clipboard) { }
 
@@ -25,4 +27,13 @@ export class GuidGeneratorComponent {
     });
   }
 
+  copyToClipboard() {
+    this.clipboard.copy(this.guid);
+    this.copyButtonText = 'Copied to clipboard';
+    this.isCopied = true;
+    setTimeout(() => {
+      this.copyButtonText = 'Copy to clipboard';
+      this.isCopied = false;
+    }, 1000);
+  }
 }

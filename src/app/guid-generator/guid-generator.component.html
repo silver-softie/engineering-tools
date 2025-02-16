@@ -12,7 +12,9 @@
     <div class="card-footer">
       <p>Generated GUID:</p>
       <p id="guid" class="fw-bold">{{ guid }}</p>
-      <p id="clipboardInfo" class="fst-italic text-success">Copied to clipboard</p>
+
+      <button class="btn btn-secondary" [ngClass]="{'btn-secondary': !isCopied, 'btn-info': isCopied}"
+        (click)="copyToClipboard()">{{ copyButtonText }}</button>
     </div>
     }
 

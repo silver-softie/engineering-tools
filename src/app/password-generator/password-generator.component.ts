@@ -21,6 +21,8 @@ export class PasswordGeneratorComponent implements OnInit {
   suffix: string = '';  // Default suffix
   password: string = '';
   isDataLoaded: boolean = false;
+  copyButtonText: string = 'Copy to clipboard';
+  isCopied: boolean = false;
 
   constructor(private http: HttpClient, private clipboard: Clipboard) { }
 
@@ -46,9 +48,17 @@ export class PasswordGeneratorComponent implements OnInit {
         selectedWords.push(filteredWords[randomIndex]);
       }
       this.password = this.prefix + selectedWords.join(this.separator) + this.suffix;
-      this.clipboard.copy(this.password);
     }
   }
 
+  copyToClipboard() {
+    this.clipboard.copy(this.password);
+    this.copyButtonText = 'Copied to clipboard';
+    this.isCopied = true;
+    setTimeout(() => {
+      this.copyButtonText = 'Copy to clipboard';
+      this.isCopied = false;
+    }, 1000);
+  }
 
 }

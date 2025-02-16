@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">URL Encoder</h1>
+    </div>
+
+    <div class="card-body">
+      <div class="form-group my-3">
+        <label for="separator">URL:</label>
+        <input type="text" id="separator" class="form-control" [(ngModel)]="url">
+      </div>
+
+      <button class="btn btn-primary" (click)="encodeUrl()" [disabled]="!url">Encode</button>
+    </div>
+
+    @if(encodedUrl) {
+    <div class="card-footer">
+      <p>Encoded URL:</p>
+      <p id="encodedUrl" class="fw-bold">{{ encodedUrl }}</p>
+
+      <button class="btn btn-secondary" [ngClass]="{'btn-secondary': !isCopied, 'btn-info': isCopied}"
+        (click)="copyToClipboard()">{{ copyButtonText }}</button>
+    </div>
+    }
+  </div>
+
+</div>
