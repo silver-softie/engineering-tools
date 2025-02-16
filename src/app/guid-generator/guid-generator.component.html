@@ -1,0 +1,21 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">GUID Generator</h1>
+    </div>
+
+    <div class="card-body">
+      <button class="btn btn-primary" (click)="generateGuid()">Generate GUID</button>
+    </div>
+
+    @if(guid) {
+    <div class="card-footer">
+      <p>Generated GUID:</p>
+      <p id="guid" class="fw-bold">{{ guid }}</p>
+      <p id="clipboardInfo" class="fst-italic text-success">Copied to clipboard</p>
+    </div>
+    }
+
+  </div>
+
+</div>
