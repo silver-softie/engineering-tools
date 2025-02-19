@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-url-encoder',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './url-encoder.component.html',
   styleUrl: './url-encoder.component.css'

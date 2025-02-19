@@ -1,12 +1,16 @@
 <h1 class="display-3 text-center">Engineering Toolkit</h1>
 
-
 <div class="container mt-5">
 
-  <div class="accordion" id="toolAccordion">
+  <ul>
+    <li><a [routerLink]="['/guid-generator']">GUID Generator</a></li>
+    <li><a [routerLink]="['/html-encoder']">HTML Encoder</a></li>
+    <li><a [routerLink]="['/password-generator']">Password Generator</a></li>
+    <li><a [routerLink]="['/url-encoder']">URL Encoder</a></li>
+  </ul>
 
-    <ng-template #viewContainerRef></ng-template>
+  <hr />
 
-  </div>
+  <router-outlet></router-outlet>
 
 </div>

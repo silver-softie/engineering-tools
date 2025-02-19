@@ -1,1 +1,27 @@
-<p>html-encoder works!</p>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">HTML Encoder</h1>
+    </div>
+
+    <div class="card-body">
+      <div class="form-group my-3">
+        <label for="separator">HTML:</label>
+        <input type="text" id="separator" class="form-control" [(ngModel)]="html">
+      </div>
+
+      <button class="btn btn-primary" (click)="encodeHtml()" [disabled]="!html">Encode</button>
+    </div>
+
+    @if(encodedHtml) {
+    <div class="card-footer">
+      <p>Encoded HTML:</p>
+      <p id="encodedHtml" class="fw-bold">{{ encodedHtml }}</p>
+
+      <button class="btn btn-secondary" [ngClass]="{'btn-secondary': !isCopied, 'btn-info': isCopied}"
+        (click)="copyToClipboard()">{{ copyButtonText }}</button>
+    </div>
+    }
+  </div>
+
+</div>
