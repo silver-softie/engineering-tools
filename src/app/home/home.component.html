@@ -1,0 +1,15 @@
+<mat-accordion multi="true">
+    @for (tool of this.tools; track tool) {
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                {{tool.name}}
+            </mat-expansion-panel-header>
+            <ng-container [ngSwitch]="tool.component">
+                <app-html-encoder *ngSwitchCase="'app-html-encoder'"></app-html-encoder>
+                <app-guid-generator *ngSwitchCase="'app-guid-generator'"></app-guid-generator>
+                <app-password-generator *ngSwitchCase="'app-password-generator'"></app-password-generator>
+                <app-url-encoder *ngSwitchCase="'app-url-encoder'"></app-url-encoder>
+            </ng-container>
+        </mat-expansion-panel>
+    }
+</mat-accordion>
