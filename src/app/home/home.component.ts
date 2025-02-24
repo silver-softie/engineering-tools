@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HtmlEncoderComponent } from "../html-encoder/html-encoder.component";
 import { GuidGeneratorComponent } from "../guid-generator/guid-generator.component";
@@ -14,9 +14,27 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent {
   tools = [
-    { name: 'GUID Generator', component: 'app-guid-generator' },
-    { name: 'HTML Encoder', component: 'app-html-encoder' },
-    { name: 'Password Generator', component: 'app-password-generator' },
-    { name: 'URL Encoder', component: 'app-url-encoder' },
-  ]
+    { name: 'GUID Generator', component: GuidGeneratorComponent },
+    { name: 'HTML Encoder', component: HtmlEncoderComponent },
+    { name: 'Password Generator', component: PasswordGeneratorComponent },
+    { name: 'URL Encoder', component: UrlEncoderComponent },
+  ];
+
+  @ViewChildren('viewContainer', { read: ViewContainerRef }) viewContainers!: QueryList<ViewContainerRef>;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  }
+
+  insertTool(tool: any, viewContainer: ViewContainerRef): boolean {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(tool.component);
+    viewContainer.clear();
+    viewContainer.createComponent(componentFactory);
+    return true;
+  }
+
+  ngAfterViewInit() {
+    this.viewContainers.forEach((viewContainer, index) => {
+      this.insertTool(this.tools[index], viewContainer);
+    });
+  }
 }
