@@ -23,7 +23,7 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.http.get<{ tools: any[] }>('assets/all-tools.json').subscribe(config => {
+    this.http.get<{ tools: any[] }>('config/all-tools.json').subscribe(config => {
       this.toolRegistry.getComponentsFromConfig(config.tools).then(toolComponents => {
           this.tools = toolComponents;
           this.viewContainers.forEach((viewContainer, index) => {
