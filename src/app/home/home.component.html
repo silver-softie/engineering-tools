@@ -1,8 +1,9 @@
-@if (this.tools.length === 0) {
-    <h2>No tools found</h2>
-    <p>There are no tools available for this project.</p>
-  
-} @else {
+<div class="content">
+  @if (this.tools.length === 0) {
+  <h2>No tools found</h2>
+  <p>There are no tools available for this project.</p>
+
+  } @else {
   <mat-accordion multi="false">
     @for (tool of this.tools; track tool) {
     <mat-expansion-panel>
@@ -13,4 +14,5 @@
     </mat-expansion-panel>
     }
   </mat-accordion>
-}
+  }
+</div>

@@ -1,0 +1,11 @@
+.banner {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure the banner is on top of other elements */
+  height: 100px; /* Set a fixed height for the banner */
+}
