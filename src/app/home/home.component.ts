@@ -1,28 +1,36 @@
 import { Component, ComponentFactoryResolver, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HtmlEncoderComponent } from "../html-encoder/html-encoder.component";
-import { GuidGeneratorComponent } from "../guid-generator/guid-generator.component";
-import { PasswordGeneratorComponent } from "../password-generator/password-generator.component";
-import { UrlEncoderComponent } from "../url-encoder/url-encoder.component";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { ToolRegistryService } from '../services/tool-registry.service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatExpansionModule, HtmlEncoderComponent, GuidGeneratorComponent, PasswordGeneratorComponent, UrlEncoderComponent],
+  imports: [CommonModule, MatExpansionModule, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tools = [
-    { name: 'GUID Generator', component: GuidGeneratorComponent },
-    { name: 'HTML Encoder', component: HtmlEncoderComponent },
-    { name: 'Password Generator', component: PasswordGeneratorComponent },
-    { name: 'URL Encoder', component: UrlEncoderComponent },
-  ];
+  tools: Array<{ name: string, component: any }> = [];
 
   @ViewChildren('viewContainer', { read: ViewContainerRef }) viewContainers!: QueryList<ViewContainerRef>;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private http: HttpClient,
+    private toolRegistry: ToolRegistryService
+  ) {
+  }
+
+  ngOnInit() {
+    this.http.get<{ tools: any[] }>('assets/all-tools.json').subscribe(config => {
+      this.toolRegistry.getComponentsFromConfig(config.tools).then(toolComponents => {
+          this.tools = toolComponents;
+          this.viewContainers.forEach((viewContainer, index) => {
+            this.insertTool(this.tools[index], viewContainer);
+          });
+        });
+    });
   }
 
   insertTool(tool: any, viewContainer: ViewContainerRef): boolean {
@@ -33,8 +41,10 @@ export class HomeComponent {
   }
 
   ngAfterViewInit() {
-    this.viewContainers.forEach((viewContainer, index) => {
-      this.insertTool(this.tools[index], viewContainer);
+    this.viewContainers.changes.subscribe(() => {
+      this.viewContainers.forEach((viewContainer, index) => {
+          this.insertTool(this.tools[index], viewContainer);
+      });
     });
   }
 }

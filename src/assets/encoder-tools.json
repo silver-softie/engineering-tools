@@ -1,0 +1,6 @@
+{
+    "tools": [
+      { "name": "HTML Encoder", "component": "HtmlEncoderComponent" },
+      { "name": "URL Encoder", "component": "UrlEncoderComponent" }
+    ]
+  }
