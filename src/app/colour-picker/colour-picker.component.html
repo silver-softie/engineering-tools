@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title">Colour Picker</h1>
+      </div>
+  
+      <div class="card-body">
+        <p>Hex value: {{ colour }}</p>
+        <input type="color" [(ngModel)]="colour" />
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" [ngClass]="{'btn-primary': !isCopied, 'btn-info': isCopied}"
+          (click)="copyToClipboard()">{{ copyButtonText }}</button>
+      </div>
+    </div>
+  </div>
