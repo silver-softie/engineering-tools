@@ -3,6 +3,7 @@
       { "name": "GUID Generator", "component": "GuidGeneratorComponent" },
       { "name": "HTML Encoder", "component": "HtmlEncoderComponent" },
       { "name": "Password Generator", "component": "PasswordGeneratorComponent" },
-      { "name": "URL Encoder", "component": "UrlEncoderComponent" }
+      { "name": "URL Encoder", "component": "UrlEncoderComponent" },
+      { "name": "Colour Picker", "component": "ColourPickerComponent" }
     ]
 }

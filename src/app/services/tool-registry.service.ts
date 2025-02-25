@@ -16,6 +16,9 @@ export class ToolRegistryService {
     
     this.registerComponent('UrlEncoderComponent', () =>
       import('../url-encoder/url-encoder.component').then(m => m.UrlEncoderComponent));
+
+    this.registerComponent('ColourPickerComponent', () =>
+      import('../colour-picker/colour-picker.component').then(m => m.ColourPickerComponent));
   }
 
   async getComponentsFromConfig(config: any[]): Promise<Array<{ name: string, component: any }>> {
