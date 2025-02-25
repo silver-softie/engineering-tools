@@ -27,7 +27,7 @@ export class PasswordGeneratorComponent implements OnInit {
   constructor(private http: HttpClient, private clipboard: Clipboard) { }
 
   ngOnInit(): void {
-    this.http.get('assets/words_alpha.txt', { responseType: 'text' }).subscribe(
+    this.http.get('words_alpha.txt', { responseType: 'text' }).subscribe(
       data => {
         console.log('Loaded words');
         this.words = data.split('\n').map(word => word.trim()).filter(word => word.length > 0);
