@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./home/home.component";
 import { BannerComponent } from './banner/banner.component';
+import { FooterComponent } from './footer/footer.component';
 
 interface DynamicComponent {
   component: any,
@@ -14,6 +15,7 @@ interface DynamicComponent {
   selector: 'app-root',
   imports: [
     BannerComponent,
+    FooterComponent,
     RouterModule,
     RouterOutlet,
     HomeComponent,
