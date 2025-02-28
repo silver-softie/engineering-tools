@@ -20,17 +20,17 @@ jobs:
           node-version: '22.x'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies (Apache)
         run: npm ci
 
-      - name: Build
+      - name: Build (Apache)
         run: npm run build-apache engineering-tools
 
-      - name: Compress Directory
+      - name: Compress Directory (Apache)
         run: |
           mkdir -p release
           cd dist/engineering-tools/browser
-          zip -r ../../../release/engineering-tools.zip .
+          zip -r ../../../release/engineering-tools-apache.zip .
 
       - name: Create Release
         id: create_release
@@ -43,7 +43,32 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
+      - name: Upload Release Asset (Apache)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/engineering-tools-apache.zip
+          asset_name: engineering-tools-apache.zip
+          asset_content_type: application/zip
+
+      - name: Clean build folder
+        run: rm -rf dist
+
+      - name: Install dependencies (production)
+        run: npm ci
+
+      - name: Build (production)
+        run: npm run build-apache engineering-tools
+
+      - name: Compress Directory (production)
+        run: |
+          mkdir -p release
+          cd dist/engineering-tools/browser
+          zip -r ../../../release/engineering-tools.zip .
+
+      - name: Upload Release Asset (production)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,3 +77,4 @@ jobs:
           asset_path: release/engineering-tools.zip
           asset_name: engineering-tools.zip
           asset_content_type: application/zip
+
