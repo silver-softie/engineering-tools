@@ -26,7 +26,10 @@ jobs:
       - name: Build (Apache)
         run: npm run build-apache engineering-tools
 
-      - name: Compress Directory (Apache)
+      - name: Test
+        run: npm run test
+
+      - name: Compress Directory
         run: |
           mkdir -p release
           cd dist/engineering-tools/browser
