@@ -29,7 +29,7 @@ jobs:
       - name: Compress Directory
         run: |
           mkdir -p release
-          zip -r release/engineering-tools.zip ./dist/engineering-tools
+          zip -r release/engineering-tools.zip ./dist/engineering-tools/browser
 
       - name: Create Release
         id: create_release
