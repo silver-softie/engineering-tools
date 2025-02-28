@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Log in to Docker Hub (optional, for pushing images)
+      # Step 2: Log in to Docker Hub (optional, for pushing images) 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
