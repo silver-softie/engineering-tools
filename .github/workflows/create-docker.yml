@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Log in to Docker Hub (optional, for pushing images) 
+      # Step 2: Log in to Docker Hub (optional, for pushing images)
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -23,12 +23,8 @@ jobs:
 
       # Step 3: Build the Docker image
       - name: Build Docker Image
-        run: docker build -t engineering-tools:latest .
+        run: docker build -t bradmoffat/engineering-tools:latest .
 
-      # Step 4: Tag the image (optional)
-      - name: Tag Docker Image
-        run: docker tag engineering-tools:latest bradmoffat/engineering-tools:latest
-
-      # Step 5: Push the Docker image to Docker Hub (optional)
+      # Step 4: Push the Docker image to Docker Hub (optional)
       - name: Push Docker Image
         run: docker push bradmoffat/engineering-tools:latest

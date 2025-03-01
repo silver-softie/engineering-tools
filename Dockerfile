@@ -13,7 +13,7 @@ COPY package.json ./
 COPY package-lock.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy all the other files. It's inefficient as we're probably copying more than we need but...
 # This isn't a huge deal as this is just the build phase.
