@@ -1,9 +1,10 @@
 {
   "name": "engineering-tools",
-  "version": "0.0.0",
+  "version": "0.0.7",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "get-version": "node scripts/get-version.js",
     "build": "ng build",
     "build-apache": "ng build --configuration production --base-href=/engineering-tools/",
     "watch": "ng build --watch --configuration development",
