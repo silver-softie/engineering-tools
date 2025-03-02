@@ -1,9 +1,12 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Build and Deploy Engineering Toolkit
+name: Build Engineering Toolkit, Create Release and Push Docker Image
 
-on: workflow_dispatch
+on: 
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -24,7 +27,145 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
+
     - name: Build
       run: npm run build-apache engineering-tools
+
     - name: Test
       run: npm run test
+
+    - name: Extract version from package.json
+      id: package_version
+      run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+  check-existing-tag:
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      tag_exists: ${{ steps.check_tag.outputs.exists }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Extract version from package.json
+        id: package_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "Tag v${{ env.VERSION }} already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag v${{ env.VERSION }} does not exist"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  release:
+    needs: [build, check-existing-tag]
+    if: needs.check-existing-tag.outputs.tag_exists != 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from package.json
+        id: package_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Install Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+
+      - name: Install dependencies (Apache)
+        run: npm ci
+
+      - name: Build (Apache)
+        run: npm run build-apache engineering-tools
+
+      - name: Compress Directory
+        run: |
+          mkdir -p release
+          cd dist/engineering-tools/browser
+          zip -r ../../../release/engineering-tools-apache.zip .
+
+      - name: Create Tag and Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION }}
+          release_name: v${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset (Apache)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/engineering-tools-apache.zip
+          asset_name: engineering-tools-apache.zip
+          asset_content_type: application/zip
+
+      - name: Clean build folder
+        run: rm -rf dist
+
+      - name: Install dependencies (production)
+        run: npm ci
+
+      - name: Build (production)
+        run: npm run build-apache engineering-tools
+
+      - name: Compress Directory (production)
+        run: |
+          mkdir -p release
+          cd dist/engineering-tools/browser
+          zip -r ../../../release/engineering-tools.zip .
+
+      - name: Upload Release Asset (production)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: release/engineering-tools.zip
+          asset_name: engineering-tools.zip
+          asset_content_type: application/zip
+  
+  docker-build:
+    needs: [release, check-existing-tag]
+    if: needs.check-existing-tag.outputs.tag_exists != 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from package.json
+        id: package_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            bradmoffat/engineering-tools:latest
+            bradmoffat/engineering-tools:v${{ env.VERSION }}
