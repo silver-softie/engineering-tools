@@ -1,0 +1,263 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Great Circle Distance Calculator</h1>
+    </div>
+
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div>
+            <h4>From</h4>
+          </div>
+
+          <!-- From latitude DMS -->
+          <div class="form-group">
+            <label>Latitude (DMS):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="from_lat_deg" class="form-control" placeholder="°" [(ngModel)]="from_lat_deg"
+                  (ngModelChange)="calculateFromLatDec()" min="0" max="90" [ngClass]="{'error-style': invalidFromLat}">
+              </div>
+              <div class="col">
+                <input type="number" id="from_lat_min" class="form-control" placeholder="'" [(ngModel)]="from_lat_min"
+                  (ngModelChange)="calculateFromLatDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidFromLat}">
+              </div>
+              <div class="col">
+                <input type="number" id="from_lat_sec" class="form-control" placeholder='"' [(ngModel)]="from_lat_sec"
+                  (ngModelChange)="calculateFromLatDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidFromLat}">
+              </div>
+            </div>
+
+            <!-- From latitude North/South -->
+            <div class="row">
+              <div class="col">
+                <span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="fromNSRadios" id="radioFromNorth"
+                      value="fromLatNorth" [(ngModel)]="from_lat_hemi" (ngModelChange)="calculateFromLatDec()">
+                    <label class="form-check-label" for="radioNorth">
+                      North
+                    </label>
+                  </div>
+
+                  <div class="form-check  form-check-inline">
+                    <input class="form-check-input" type="radio" name="fromNSRadios" id="radioFromSouth"
+                      value="fromLatSouth" [(ngModel)]="from_lat_hemi" (ngModelChange)="calculateFromLatDec()">
+                    <label class="form-check-label" for="radioSouth">
+                      South
+                    </label>
+                  </div>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- From longitude DMS -->
+          <div class="form-group">
+            <label>Longitude (DMS):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="from_lon_deg" class="form-control" placeholder="°" [(ngModel)]="from_long_deg"
+                  (ngModelChange)="calculateFromLongDec()" min="0" max="180"
+                  [ngClass]="{'error-style': invalidFromLong}">
+              </div>
+              <div class="col">
+                <input type="number" id="from_lon_min" class="form-control" placeholder="'" [(ngModel)]="from_long_min"
+                  (ngModelChange)="calculateFromLongDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidFromLong}">
+              </div>
+              <div class="col">
+                <input type="number" id="from_lon_sec" class="form-control" placeholder='"' [(ngModel)]="from_long_sec"
+                  (ngModelChange)="calculateFromLongDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidFromLong}">
+              </div>
+            </div>
+          </div>
+
+          <!-- From longitude East/West -->
+          <div class="row">
+            <div class="col">
+              <span>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="fromEWRadios" id="radioFromEast"
+                    value="fromLongEast" [(ngModel)]="from_long_hemi" (ngModelChange)="calculateFromLongDec()">
+                  <label class="form-check-label" for="radioFromEast">
+                    East
+                  </label>
+                </div>
+
+                <div class="form-check  form-check-inline">
+                  <input class="form-check-input" type="radio" name="fromEWRadios" id="radioFromWest"
+                    value="fromLongWest" [(ngModel)]="from_long_hemi" (ngModelChange)="calculateFromLongDec()">
+                  <label class="form-check-label" for="radioFromWest">
+                    West
+                  </label>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="form-group">
+            <label>Latitude (decimal):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="from_lat_dec" class="form-control" placeholder="0.0" [(ngModel)]="from_lat_dec"
+                  [ngClass]="{'error-style': invalidFromLat}">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Longitude (decimal):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="from_lat_dec" class="form-control" placeholder="0.0"
+                  [(ngModel)]="from_long_dec" [ngClass]="{'error-style': invalidFromLong}">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+          <div>
+            <h4>To</h4>
+          </div>
+
+          <!-- To latitude DMS -->
+          <div class="form-group">
+            <label>Latitude (DMS):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="to_lat_deg" class="form-control" placeholder="°" [(ngModel)]="to_lat_deg"
+                  (ngModelChange)="calculateToLatDec()" min="0" max="90" [ngClass]="{'error-style': invalidToLat}">
+              </div>
+              <div class="col">
+                <input type="number" id="to_lat_min" class="form-control" placeholder="'" [(ngModel)]="to_lat_min"
+                  (ngModelChange)="calculateToLatDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidToLat}">
+              </div>
+              <div class="col">
+                <input type="number" id="to_lat_sec" class="form-control" placeholder='"' [(ngModel)]="to_lat_sec"
+                  (ngModelChange)="calculateToLatDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidToLat}">
+              </div>
+            </div>
+
+            <!-- To latitude North/South -->
+            <div class="row">
+              <div class="col">
+                <span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="toNSRadios" id="radioToNorth" value="toLatNorth"
+                      [(ngModel)]="to_lat_hemi" (ngModelChange)="calculateToLatDec()">
+                    <label class="form-check-label" for="radioToNorth">
+                      North
+                    </label>
+                  </div>
+
+                  <div class="form-check  form-check-inline">
+                    <input class="form-check-input" type="radio" name="toNSRadios" id="radioToSouth" value="toLatSouth"
+                      [(ngModel)]="to_lat_hemi" (ngModelChange)="calculateToLatDec()">
+                    <label class="form-check-label" for="radioToSouth" [(ngModel)]="to_lat_hemi">
+                      South
+                    </label>
+                  </div>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>Longitude (DMS):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="to_lon_deg" class="form-control" placeholder="°" [(ngModel)]="to_long_deg"
+                  (ngModelChange)="calculateToLongDec()" min="0" max="180" [ngClass]="{'error-style': invalidToLong}">
+              </div>
+              <div class="col">
+                <input type="number" id="to_lon_min" class="form-control" placeholder="'" [(ngModel)]="to_long_min"
+                  (ngModelChange)="calculateToLongDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidToLong}">
+              </div>
+              <div class="col">
+                <input type="number" id="to_lon_sec" class="form-control" placeholder='"' [(ngModel)]="to_long_sec"
+                  (ngModelChange)="calculateToLongDec()" min="0" max="59.99999"
+                  [ngClass]="{'error-style': invalidToLong}">
+              </div>
+            </div>
+
+            <!-- From longitude East/West -->
+            <div class="row">
+              <div class="col">
+                <span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="toEWRadios" id="radioToEast" value="toLongEast"
+                      [(ngModel)]="to_long_hemi" (ngModelChange)="calculateToLongDec()">
+                    <label class="form-check-label" for="radioToEast">
+                      East
+                    </label>
+                  </div>
+
+                  <div class="form-check  form-check-inline">
+                    <input class="form-check-input" type="radio" name="toEWRadios" id="radioToWest" value="toLongWest"
+                      [(ngModel)]="to_long_hemi" (ngModelChange)="calculateToLongDec()">
+                    <label class="form-check-label" for="radioToWest">
+                      West
+                    </label>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="form-group">
+            <label>Latitude (decimal):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="to_lat_dec" class="form-control" placeholder="0.0" [(ngModel)]="to_lat_dec"
+                  [ngClass]="{'error-style': invalidToLat}">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Longitude (decimal):</label>
+            <div class="row">
+              <div class="col">
+                <input type="number" id="to_lat_dec" class="form-control" placeholder="0.0" [(ngModel)]="to_long_dec"
+                  [ngClass]="{'error-style': invalidToLong}">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <button class="btn btn-primary mt-3"
+        [disabled]="invalidFromLat || invalidFromLong || invalidToLat || invalidToLong"
+        (click)="calculate()">Calculate</button>
+
+      <button class="btn btn-warning ms-2 mt-3" (click)="reset()">Reset</button>
+    </div>
+
+    @if(calculated_distance_km != undefined) {
+    <div class="card-footer">
+      <p>Distance:</p>
+      <p id="distance" class="fw-bold">{{ calculated_distance_km }} km</p>
+    </div>
+    }
+  </div>
+</div>
