@@ -253,7 +253,7 @@
       <button class="btn btn-warning ms-2 mt-3" (click)="reset()">Reset</button>
     </div>
 
-    @if(calculated_distance_km != undefined) {
+    @if(calculated_distance_km !== undefined) {
     <div class="card-footer">
       <p>Distance:</p>
       <p id="distance" class="fw-bold">{{ calculated_distance_km }} km</p>
