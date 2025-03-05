@@ -182,6 +182,11 @@ export class GreatCircleDistanceComponent {
     this.to_lat_hemi = 'toLatNorth';
     this.to_long_hemi = 'toLongEast';
 
+    this.invalidFromLat = false;
+    this.invalidFromLong = false;
+    this.invalidToLat = false;
+    this.invalidToLong = false;
+
     this.calculated_distance_m = undefined;
     this.converted_distance = undefined;
     this.display_unit = 'm';
