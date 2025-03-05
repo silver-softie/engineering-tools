@@ -37,7 +37,9 @@ export class GreatCircleDistanceComponent {
   invalidToLat: boolean = false;
   invalidToLong: boolean = false;
 
-  calculated_distance_km: number | undefined = undefined;
+  calculated_distance_m: number | undefined = undefined;
+  display_unit: string = 'm';
+  converted_distance: number | undefined = this.calculated_distance_m; // Displayed distance
 
   constructor(private haversineService: HaversineService) {
   }
@@ -148,7 +150,13 @@ export class GreatCircleDistanceComponent {
 
 
   calculateDistance() {
-    this.calculated_distance_km = this.haversineService.getDistance(this.from_lat_dec, this.from_long_dec, this.to_lat_dec, this.to_long_dec);
+    this.calculateFromLatDec();
+    this.calculateFromLongDec()
+    this.calculateToLatDec();
+    this.calculateToLongDec()
+    this.calculated_distance_m = this.haversineService.getDistance(this.from_lat_dec, this.from_long_dec, this.to_lat_dec, this.to_long_dec);
+    this.converted_distance = this.calculated_distance_m;
+    this.changeUnit(this.display_unit);
   }
 
   reset() {
@@ -174,7 +182,9 @@ export class GreatCircleDistanceComponent {
     this.to_lat_hemi = 'toLatNorth';
     this.to_long_hemi = 'toLongEast';
 
-    this.calculated_distance_km = undefined;
+    this.calculated_distance_m = undefined;
+    this.converted_distance = undefined;
+    this.display_unit = 'm';
   }
 
   /**
@@ -203,5 +213,29 @@ export class GreatCircleDistanceComponent {
     return { degrees, minutes, seconds };
   }
 
+  // Method to change units
+  changeUnit(unit: string): void {
+    if (!this.calculated_distance_m) return;
+
+    this.display_unit = unit;
+
+    // Convert the distance based on the selected unit
+    switch (unit) {
+      case 'm':
+        this.converted_distance = this.calculated_distance_m;
+        break;
+      case 'km':
+        this.converted_distance = this.calculated_distance_m / 1000;
+        break;
+      case 'miles':
+        this.converted_distance = this.calculated_distance_m / 1609.34; // 1 mile = 1609.34 meters
+        break;
+      case 'nautical miles':
+        this.converted_distance = this.calculated_distance_m / 1852; // 1 nautical mile = 1852 meters
+        break;
+      default:
+        this.converted_distance = this.calculated_distance_m;
+    }
+  }
 
 }

@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class HaversineService {
 
-  // Earth radius in kilometers
-  private readonly RADIUS_OF_EARTH_KM = 6371;
+  // Earth radius in metres
+  private readonly RADIUS_OF_EARTH_M = 6371000; // 6371 km * 1000
 
   /**
    * Calculates the distance between two geographic points using the Haversine formula.
@@ -14,7 +14,7 @@ export class HaversineService {
    * @param lon1 Longitude of the first point in decimal degrees
    * @param lat2 Latitude of the second point in decimal degrees
    * @param lon2 Longitude of the second point in decimal degrees
-   * @returns Distance in kilometers
+   * @returns Distance in metres
    */
   public getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     // Convert degrees to radians
@@ -32,6 +32,6 @@ export class HaversineService {
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return this.RADIUS_OF_EARTH_KM * c; // Distance in kilometers
+    return this.RADIUS_OF_EARTH_M * c; // Distance in metres
   }
 }

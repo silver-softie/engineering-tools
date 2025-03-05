@@ -254,10 +254,29 @@
       <button class="btn btn-warning ms-2 mt-3" (click)="reset()">Reset</button>
     </div>
 
-    @if(calculated_distance_km !== undefined) {
+    @if(converted_distance !== undefined) {
     <div class="card-footer">
       <p>Distance:</p>
-      <p id="distance" class="fw-bold">{{ calculated_distance_km }} km</p>
+
+      <div class="d-flex align-items-center">
+        <p id="distance" class="fw-bold me-3 mb-0">
+          {{ converted_distance | number:'1.2-2' }}
+        </p>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{ display_unit }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" (click)="changeUnit('m')">m</a></li>
+            <li><a class="dropdown-item" (click)="changeUnit('km')">km</a></li>
+            <li><a class="dropdown-item" (click)="changeUnit('miles')">miles</a></li>
+            <li><a class="dropdown-item" (click)="changeUnit('nautical miles')">nautical miles</a></li>
+          </ul>
+        </div>
+      </div>
+
+
     </div>
     }
   </div>
