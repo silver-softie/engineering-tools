@@ -94,7 +94,60 @@ export class GreatCircleDistanceComponent {
     this.invalidToLong = this.to_long_dec < -180.0 || this.to_long_dec > 180.0;
   }
 
-  calculate() {
+  calculateFromLatDms() {
+    if (this.from_lat_dec < 0.0) {
+      this.from_lat_hemi = 'fromLatSouth';
+    } else {
+      this.from_lat_hemi = 'fromLatNorth';
+    }
+
+    const fromLatDms = this.decimalDegreesToDMS(Math.abs(this.from_lat_dec));
+    this.from_lat_deg = fromLatDms.degrees;
+    this.from_lat_min = fromLatDms.minutes;
+    this.from_lat_sec = fromLatDms.seconds;
+  }
+
+  calculateFromLongDms() {
+    if (this.from_long_dec < 0.0) {
+      this.from_long_hemi = 'fromLongWest';
+    } else {
+      this.from_long_hemi = 'fromLongEast';
+    }
+
+    const fromLongDms = this.decimalDegreesToDMS(Math.abs(this.from_long_dec));
+    this.from_long_deg = fromLongDms.degrees;
+    this.from_long_min = fromLongDms.minutes;
+    this.from_long_sec = fromLongDms.seconds;
+  }
+
+  calculateToLatDms() {
+    if (this.to_lat_dec < 0.0) {
+      this.to_lat_hemi = 'toLatSouth';
+    } else {
+      this.to_lat_hemi = 'toLatNorth';
+    }
+
+    const toLatDms = this.decimalDegreesToDMS(Math.abs(this.to_lat_dec));
+    this.to_lat_deg = toLatDms.degrees;
+    this.to_lat_min = toLatDms.minutes;
+    this.to_lat_sec = toLatDms.seconds;
+  }
+
+  calculateToLongDms() {
+    if (this.to_long_dec < 0.0) {
+      this.to_long_hemi = 'toLongWest';
+    } else {
+      this.to_long_hemi = 'toLongEast';
+    }
+
+    const toLongDms = this.decimalDegreesToDMS(Math.abs(this.to_long_dec));
+    this.to_long_deg = toLongDms.degrees;
+    this.to_long_min = toLongDms.minutes;
+    this.to_long_sec = toLongDms.seconds;
+  }
+
+
+  calculateDistance() {
     this.calculated_distance_km = this.haversineService.getDistance(this.from_lat_dec, this.from_long_dec, this.to_lat_dec, this.to_long_dec);
   }
 
@@ -123,5 +176,32 @@ export class GreatCircleDistanceComponent {
 
     this.calculated_distance_km = undefined;
   }
+
+  /**
+   * Converts a decimal degree value to degrees, minutes, and seconds (DMS) format.
+   *
+   * @param decimalDegrees - The input value in decimal degrees format.
+   * @returns An object containing the DMS representation:
+   *          - `degrees`: The integral degree portion.
+   *          - `minutes`: The integral minute portion (absolute value).
+   *          - `seconds`: The rounded second portion (absolute value).
+   */
+  private decimalDegreesToDMS(decimalDegrees: number): { degrees: number, minutes: number, seconds: number } {
+    // Extract the integral degree portion from the input
+    const degrees = Math.floor(decimalDegrees);
+
+    // Calculate the decimal portion of minutes
+    const minutesDecimal = Math.abs((decimalDegrees - degrees) * 60);
+
+    // Extract the integral minute portion
+    const minutes = Math.floor(minutesDecimal);
+
+    // Calculate the remaining seconds and round them
+    const seconds = Math.round((minutesDecimal - minutes) * 60);
+
+    // Return the DMS representation as an object
+    return { degrees, minutes, seconds };
+  }
+
 
 }
