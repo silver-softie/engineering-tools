@@ -7,23 +7,26 @@ export class ToolRegistryService {
   constructor() {
     this.registerComponent('ColourPickerComponent', () =>
       import('../colour-picker/colour-picker.component').then(m => m.ColourPickerComponent));
-    
+
     this.registerComponent('GuidGeneratorComponent', () =>
       import('../guid-generator/guid-generator.component').then(m => m.GuidGeneratorComponent));
-    
+
     this.registerComponent('HtmlEncoderComponent', () =>
       import('../html-encoder/html-encoder.component').then(m => m.HtmlEncoderComponent));
-    
+
     this.registerComponent('PasswordGeneratorComponent', () =>
       import('../password-generator/password-generator.component').then(m => m.PasswordGeneratorComponent));
-    
+
     this.registerComponent('UrlEncoderComponent', () =>
       import('../url-encoder/url-encoder.component').then(m => m.UrlEncoderComponent));
+
+    this.registerComponent('GreatCircleDistanceComponent', () =>
+      import('../great-circle-distance/great-circle-distance.component').then(m => m.GreatCircleDistanceComponent));
   }
 
   async getComponentsFromConfig(config: any[]): Promise<Array<{ name: string, component: any }>> {
     const tools: Array<{ name: string, component: any }> = [];
-    
+
     for (const tool of config) {
       const loadComponentFn = this.componentsMap.get(tool.component);
       if (loadComponentFn) {
@@ -34,7 +37,7 @@ export class ToolRegistryService {
         });
       }
     }
-    
+
     return tools;
   }
 
