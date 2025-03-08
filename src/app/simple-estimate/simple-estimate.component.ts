@@ -32,15 +32,15 @@ interface Task {
 })
 export class SimpleEstimateComponent {
   tasks: Task[] = [
-    { name: 'Refactor the doodad', complexity: Complexity.Small, uncertainty: Uncertainty.Low },
-    { name: 'Swizzle columns', complexity: Complexity.Large, uncertainty: Uncertainty.Moderate },
-    { name: 'Reticulate splines', complexity: Complexity.Medium, uncertainty: Uncertainty.Extreme },
-    { name: 'Reverse manifold intake', complexity: Complexity.Medium, uncertainty: Uncertainty.Moderate },
-    { name: 'Deploy', complexity: Complexity.Small, uncertainty: Uncertainty.Low }
+    { name: 'Refactor the doodad', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 },
+    { name: 'Swizzle columns', complexity: Complexity.Large, uncertainty: Uncertainty.Moderate, expected: 1.1, worstCase: 3 },
+    { name: 'Reticulate splines', complexity: Complexity.Medium, uncertainty: Uncertainty.Extreme, expected: 1.1, worstCase: 3 },
+    { name: 'Reverse manifold intake', complexity: Complexity.Medium, uncertainty: Uncertainty.Moderate, expected: 1.1, worstCase: 3 },
+    { name: 'Deploy', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 }
   ];
 
   addTask() {
-
+    this.tasks.push({ name: 'Deploy', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 });
   }
 
   removeTask() {

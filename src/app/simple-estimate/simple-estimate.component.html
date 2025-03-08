@@ -4,15 +4,25 @@
       <h1 class="card-title">Simple Estimate</h1>
     </div>
 
-    <div class="card-body">
-      @for(task of this.tasks; track task) {
-      <div class="row align-items-center mb-1">
+    <div class="d-table table-striped">
 
-        <div class="col-3">
+      <div class="d-table-row fw-bold">
+        <div class="d-table-cell p-2 border">Task</div>
+        <div class="d-table-cell text-center p-2 border">Size</div>
+        <div class="d-table-cell text-center p-2 border">Uncertainty</div>
+        <div class="d-table-cell text-center p-2 border">Expected</div>
+        <div class="d-table-cell text-center p-2 border">Worst Case</div>
+        <div class="d-table-cell p-2 border"></div>
+      </div>
+
+
+      @for(task of this.tasks; track task) {
+      <div class="d-table-row">
+        <div class="d-table-cell p-2">
           <input class="w-100" type="text" [(ngModel)]="task.name" />
         </div>
 
-        <div class="col-auto">
+        <div class="d-table-cell text-center">
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="complexityDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,7 +37,7 @@
           </div>
         </div>
 
-        <div class="col-auto">
+        <div class="d-table-cell text-center">
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="uncertaintyDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,15 +52,15 @@
           </div>
         </div>
 
-        <div class="col-1">
-          Expected
+        <div class="d-table-cell text-center p-2">
+          {{ task.expected }}
         </div>
 
-        <div class="col-1">
-          Worst case
+        <div class="d-table-cell text-center p-2">
+          {{ task.worstCase }}
         </div>
 
-        <div class="col">
+        <div class="d-table-cell p-2">
           <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;">
             ❌
           </button>
@@ -59,8 +69,19 @@
       </div>
       }
 
+    </div>
 
-      <button>Add</button>
+
+    <button (click)="addTask()">Add</button>
+
+    <hr />
+
+    <div class="row">
+
+      <div class="col-auto border ms-2">
+        200 days
+      </div>
+
 
     </div>
 
