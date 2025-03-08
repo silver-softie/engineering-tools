@@ -46,4 +46,16 @@ export class SimpleEstimateComponent {
   removeTask() {
 
   }
+
+  get sumExpected(): number {
+    return this.tasks.reduce((totalExpected: number, task: Task) => {
+      return totalExpected + (task.expected ?? 0); // Use 0 if task.expected is undefined
+    }, 0);
+  }
+
+  get sumWorstCase(): number {
+    return this.tasks.reduce((totalWorstCase: number, task: Task) => {
+      return totalWorstCase + (task.worstCase ?? 0); // Use 0 if task.worstCase is undefined
+    }, 0);
+  }
 }

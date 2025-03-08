@@ -4,7 +4,7 @@
       <h1 class="card-title">Simple Estimate</h1>
     </div>
 
-    <div class="d-table table-striped">
+    <div class="d-table mb-2">
 
       <div class="d-table-row fw-bold">
         <div class="d-table-cell p-2 border">Task</div>
@@ -24,7 +24,7 @@
 
         <div class="d-table-cell text-center">
           <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="complexityDropdown"
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="complexityDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
               Small
             </button>
@@ -39,7 +39,7 @@
 
         <div class="d-table-cell text-center">
           <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="uncertaintyDropdown"
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="uncertaintyDropdown"
               data-bs-toggle="dropdown" aria-expanded="false">
               Low
             </button>
@@ -61,7 +61,8 @@
         </div>
 
         <div class="d-table-cell p-2">
-          <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;">
+          <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;"
+            title="Delete task">
             ❌
           </button>
         </div>
@@ -69,22 +70,15 @@
       </div>
       }
 
-    </div>
-
-
-    <button (click)="addTask()">Add</button>
-
-    <hr />
-
-    <div class="row">
-
-      <div class="col-auto border ms-2">
-        200 days
-      </div>
-
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumExpected }}</div>
+      <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumWorstCase }}</div>
 
     </div>
 
+    <button class="btn btn-primary ms-4 me-4 mb-4" (click)="addTask()">Add</button>
 
   </div>
 
