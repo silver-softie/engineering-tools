@@ -10,8 +10,8 @@ import { FooterComponent } from './footer/footer.component';
     BannerComponent,
     FooterComponent,
     RouterModule,
-    HomeComponent,
-  ],
+    HomeComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

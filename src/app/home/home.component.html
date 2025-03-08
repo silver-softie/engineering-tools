@@ -1,18 +1,25 @@
-<div class="content">
-  @if (this.tools.length === 0) {
-  <h2>No tools found</h2>
-  <p>There are no tools available for this project.</p>
-
-  } @else {
-  <mat-accordion multi="false">
-    @for (tool of this.tools; track tool) {
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        {{tool.name}}
-      </mat-expansion-panel-header>
-      <ng-template #viewContainer></ng-template>
-    </mat-expansion-panel>
-    }
-  </mat-accordion>
-  }
+<div class="home-container">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened>
+      <h2 class="sidenav-title">Engineering Toolkit</h2>
+      @if (this.tools.length === 0) {
+      <div class="no-tools-message">
+        <span>No tools available</span>
+      </div>
+      } @else {
+      <mat-nav-list>
+        @for (tool of this.tools; track tool) {
+        <a mat-list-item [class.active]="selectedTool?.name === tool.name" (click)="selectTool(tool)">
+          <span class="nav-label">{{tool.name}}</span>
+        </a>
+        }
+      </mat-nav-list>
+      }
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="tool-container">
+        <ng-template #toolContainer></ng-template>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
