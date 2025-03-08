@@ -21,6 +21,10 @@
       "component": "PasswordGeneratorComponent"
     },
     {
+      "name": "Simple Estimate",
+      "component": "SimpleEstimateComponent"
+    },
+    {
       "name": "URL Encoder",
       "component": "UrlEncoderComponent"
     }

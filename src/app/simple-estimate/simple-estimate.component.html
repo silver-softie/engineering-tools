@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Simple Estimate</h1>
+    </div>
+
+    <div class="card-body">
+      @for(task of this.tasks; track task) {
+      <div class="row align-items-center mb-1">
+
+        <div class="col-3">
+          <input class="w-100" type="text" [(ngModel)]="task.name" />
+        </div>
+
+        <div class="col-auto">
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="complexityDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Small
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item">Small</a></li>
+              <li><a class="dropdown-item">Medium</a></li>
+              <li><a class="dropdown-item">Large</a></li>
+              <li><a class="dropdown-item">Extra Large</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="uncertaintyDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Low
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item">Low</a></li>
+              <li><a class="dropdown-item">Moderate</a></li>
+              <li><a class="dropdown-item">High</a></li>
+              <li><a class="dropdown-item">Extreme</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-1">
+          Expected
+        </div>
+
+        <div class="col-1">
+          Worst case
+        </div>
+
+        <div class="col">
+          <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;">
+            ❌
+          </button>
+        </div>
+
+      </div>
+      }
+
+
+      <button>Add</button>
+
+    </div>
+
+
+  </div>
+
+</div>
