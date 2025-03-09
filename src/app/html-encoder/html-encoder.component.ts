@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './html-encoder.component.css'
 })
 export class HtmlEncoderComponent {
-  html: string = '';
-  encodedHtml: string = '';
+  rawHtml: string = '';
+  safeHtmlString: string = '';
   copyButtonText: string = 'Copy to clipboard';
   isCopied: boolean = false;
 
@@ -20,19 +20,24 @@ export class HtmlEncoderComponent {
   }
 
   encodeHtml(): void {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerText = this.html;
-    this.encodedHtml = tempDiv.innerHTML;
+    this.safeHtmlString = this.rawHtml
+      .replace(/&/g, '&amp;')   // Encode &
+      .replace(/</g, '&lt;')    // Encode <
+      .replace(/>/g, '&gt;')    // Encode >
+      .replace(/"/g, '&quot;')  // Encode "
+      .replace(/'/g, '&#39;');  // Encode '
   }
 
   copyToClipboard(): void {
-    this.clipboard.copy(this.encodedHtml);
-    this.copyButtonText = 'Copied to clipboard';
-    this.isCopied = true;
-    setTimeout(() => {
-      this.copyButtonText = 'Copy to clipboard';
-      this.isCopied = false;
-    }, 1000);
+    if (this.safeHtmlString) {
+      this.clipboard.copy(this.safeHtmlString);
+      this.copyButtonText = 'Copied to clipboard';
+      this.isCopied = true;
+      setTimeout(() => {
+        this.copyButtonText = 'Copy to clipboard';
+        this.isCopied = false;
+      }, 1000);
+    }
   }
 }
 
