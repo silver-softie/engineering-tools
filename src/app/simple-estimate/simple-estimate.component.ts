@@ -31,20 +31,61 @@ interface Task {
   styleUrl: './simple-estimate.component.css'
 })
 export class SimpleEstimateComponent {
-  tasks: Task[] = [
-    { name: 'Refactor the doodad', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 },
-    { name: 'Swizzle columns', complexity: Complexity.Large, uncertainty: Uncertainty.Moderate, expected: 1.1, worstCase: 3 },
-    { name: 'Reticulate splines', complexity: Complexity.Medium, uncertainty: Uncertainty.Extreme, expected: 1.1, worstCase: 3 },
-    { name: 'Reverse manifold intake', complexity: Complexity.Medium, uncertainty: Uncertainty.Moderate, expected: 1.1, worstCase: 3 },
-    { name: 'Deploy', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 }
-  ];
+  tasks: Task[] = [];
+
+  Complexity = Complexity;
+
+  complexityKeys: (keyof typeof Complexity)[] = Object.keys(Complexity).filter(
+    key => isNaN(Number(key))
+  ) as (keyof typeof Complexity)[];
+
+  Uncertainty = Uncertainty;
+
+  uncertaintyKeys: (keyof typeof Uncertainty)[] = Object.keys(Uncertainty).filter(
+    key => isNaN(Number(key))
+  ) as (keyof typeof Uncertainty)[];
+
+  complexityDuration: Record<Complexity, number> = {
+    [Complexity.Small]: 1.0,
+    [Complexity.Medium]: 3.0,
+    [Complexity.Large]: 5.0,
+    [Complexity.ExtraLarge]: 10.0
+  };
+
+  uncertaintyMultipliers: Record<Uncertainty, number> = {
+    [Uncertainty.Low]: 1.1,
+    [Uncertainty.Moderate]: 1.5,
+    [Uncertainty.High]: 2.0,
+    [Uncertainty.Extreme]: 5.0
+  };
 
   addTask() {
-    this.tasks.push({ name: 'Deploy', complexity: Complexity.Small, uncertainty: Uncertainty.Low, expected: 1.1, worstCase: 3 });
+    this.tasks.push({
+      name: 'New task',
+      complexity: Complexity.Small,
+      uncertainty: Uncertainty.Low,
+      expected: this.complexityDuration[Complexity.Small],
+      worstCase: this.uncertaintyMultipliers[Uncertainty.Low]
+    });
   }
 
-  removeTask() {
+  removeTask(index: number) {
+    this.tasks.splice(index, 1);
+  }
 
+  updateComplexity(task: Task, key: string): void {
+    task.complexity = Complexity[key as keyof typeof Complexity];
+    this.recalculateTask(task);
+  }
+
+  updateUncertainty(task: Task, key: string): void {
+    task.uncertainty = Uncertainty[key as keyof typeof Uncertainty];
+    this.recalculateTask(task);
+  }
+
+  private recalculateTask(task: Task) {
+    task.expected = this.complexityDuration[task.complexity];
+    task.worstCase = this.complexityDuration[task.complexity] * this.uncertaintyMultipliers[task.uncertainty];
   }
 
   get sumExpected(): number {
