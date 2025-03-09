@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+
 
 enum Complexity {
   Small,
@@ -24,9 +26,11 @@ interface Task {
   worstCase?: number
 }
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-simple-estimate',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationDialogComponent],
   templateUrl: './simple-estimate.component.html',
   styleUrl: './simple-estimate.component.css'
 })
@@ -59,6 +63,8 @@ export class SimpleEstimateComponent {
     [Uncertainty.Extreme]: 5.0
   };
 
+
+
   addTask() {
     this.tasks.push({
       name: 'New task',
@@ -73,6 +79,13 @@ export class SimpleEstimateComponent {
     this.tasks.splice(index, 1);
   }
 
+  handleConfirmation(isConfirmed: boolean): void {
+    if (isConfirmed) {
+      this.tasks = [];
+      console.log('Estimate reset.');
+    }
+  }
+
   updateComplexity(task: Task, key: string): void {
     task.complexity = Complexity[key as keyof typeof Complexity];
     this.recalculateTask(task);
@@ -81,6 +94,20 @@ export class SimpleEstimateComponent {
   updateUncertainty(task: Task, key: string): void {
     task.uncertainty = Uncertainty[key as keyof typeof Uncertainty];
     this.recalculateTask(task);
+  }
+
+  reset(): void {
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement, {
+        backdrop: true,
+        keyboard: true
+      });
+      modal.show();
+      console.log('Modal is displayed.');
+    } else {
+      console.error('Modal element not found in the DOM.');
+    }
   }
 
   private recalculateTask(task: Task) {
