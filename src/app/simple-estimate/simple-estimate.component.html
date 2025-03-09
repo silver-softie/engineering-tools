@@ -15,6 +15,14 @@
         <div class="d-table-cell p-2 border"></div>
       </div>
 
+      @if(this.tasks.length === 0) {
+        <div class="d-table-row">
+          <div class="d-table-cell p-2">
+           <p>No tasks added yet.</p>
+          </div>
+        </div>
+        }
+
       @for(task of this.tasks; track task; let idx = $index) {
       <div class="d-table-row">
 
