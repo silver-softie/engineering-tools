@@ -7,16 +7,16 @@
     <div class="card-body">
       <div class="form-group my-3">
         <label for="separator">HTML:</label>
-        <input type="text" id="separator" class="form-control" [(ngModel)]="html">
+        <input type="text" id="separator" class="form-control" [(ngModel)]="rawHtml">
       </div>
 
-      <button class="btn btn-primary" (click)="encodeHtml()" [disabled]="!html">Encode</button>
+      <button class="btn btn-primary" (click)="encodeHtml()" [disabled]="!rawHtml">Encode</button>
     </div>
 
-    @if(encodedHtml) {
+    @if(safeHtmlString) {
     <div class="card-footer">
       <p>Encoded HTML:</p>
-      <p id="encodedHtml" class="fw-bold">{{ encodedHtml }}</p>
+      <p id="encodedHtml" class="fw-bold">{{ safeHtmlString }}</p>
 
       <button class="btn btn-secondary" [ngClass]="{'btn-secondary': !isCopied, 'btn-info': isCopied}"
         (click)="copyToClipboard()">{{ copyButtonText }}</button>
