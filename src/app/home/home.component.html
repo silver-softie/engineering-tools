@@ -1,7 +1,14 @@
 <div class="home-container">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav mode="side" opened>
-      <h2 class="sidenav-title">Engineering Toolkit</h2>
+
+      <div class="sidenav-title">
+        <div class="logo">
+          <img src="settings_48dp_434343_FILL0_wght200_GRAD0_opsz48.png" alt="Logo" />
+        </div>
+        <span>Engineering Toolkit</span>
+      </div>
+
       @if (this.tools.length === 0) {
       <div class="no-tools-message">
         <span>No tools available</span>
