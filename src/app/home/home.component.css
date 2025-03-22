@@ -3,28 +3,28 @@
     width: 100%;
     overflow: hidden;
   }
-  
+
   .home-container {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 60px); 
+    height: calc(100vh - 60px);
   }
-  
+
   .sidenav-container {
     flex: 1;
     width: 100%;
-    height: 100%; 
+    height: 100%;
   }
-  
+
   mat-sidenav {
-    width: 250px;
+    width: 300px;
     background-color: #f8f8f8;
     border-right: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
   }
-  
+
   .sidenav-title {
     padding: 16px;
     font-size: 24px;
@@ -33,63 +33,63 @@
     margin: 0;
     border-bottom: 1px solid #e0e0e0;
   }
-  
+
   mat-sidenav-content {
     flex: 1;
     padding: 0;
     background-color: #ffffff;
     overflow-y: auto;
   }
-  
+
   .content {
     padding: 0;
     height: 100%;
   }
-  
+
   .tool-container {
     padding: 60px;
     background-color: #ffffff;
     border-radius: 5px;
     height: calc(100% - 40px);
   }
-  
+
   .tool-container h2 {
     font-size: 32px;
     margin-bottom: 20px;
     color: #333;
   }
-  
+
   .nav-label {
     margin-left: 8px;
   }
-  
+
   .active {
     background-color: #efefef;
     color: #3f51b5;
     border-left: 4px solid #3f51b5;
   }
-  
+
   .no-tools-message {
     display: flex;
     align-items: center;
     padding: 16px;
     color: #f44336;
   }
-  
+
   .no-tools-message mat-icon {
     margin-right: 8px;
   }
-  
+
   .no-tools-container {
     text-align: center;
     margin-top: 50px;
     color: #777;
   }
-  
+
   mat-nav-list {
     padding-top: 0;
   }
-  
+
   mat-nav-list a {
     font-weight: 400;
     color: #333;
@@ -101,18 +101,46 @@
     align-items: center;
     transition: background-color 0.2s ease;
   }
-  
+
   mat-nav-list a:hover {
     background-color: #efefef;
   }
-  
+
   mat-nav-list a.active {
     background-color: #ececec;
     color: #4263eb;
   }
-  
+
   ::ng-deep .mat-drawer-container,
   ::ng-deep .mat-drawer-content,
   ::ng-deep .mat-drawer {
     height: 100% !important;
+  }
+
+  .logo {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: inline-block;
+    transition: transform 0.2s ease-in-out; /* Smooth scaling effect */
+  }
+
+  .logo img:hover {
+    animation: spin 2s linear infinite; /* Rotate continuously */
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg); /* Rotation starts at 0 degrees */
+    }
+    100% {
+      transform: rotate(360deg); /* Full rotation */
+    }
   }
