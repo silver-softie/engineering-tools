@@ -27,6 +27,10 @@
     {
       "name": "URL Encoder",
       "component": "UrlEncoderComponent"
+    },
+    {
+      "name": "Username Generator",
+      "component": "UsernameGeneratorComponent"
     }
   ]
 }
