@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, QueryList, ViewChildren, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewContainerRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -15,7 +15,7 @@ export class HomeComponent implements AfterViewInit {
   firstToolSelected: boolean = false;
   tools: Array<{ name: string, component: any }> = [];
   selectedTool: { name: string, component: any } | null = null;
-  
+
   @ViewChild('toolContainer', { read: ViewContainerRef, static: true }) toolContainer!: ViewContainerRef;
 
   constructor(
