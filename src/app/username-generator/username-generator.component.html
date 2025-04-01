@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Username Generator</h1>
+    </div>
+
+    <div class="card-body">
+      <div class="form-group my-3">
+        <label for="separator">Separator:</label>
+        <input type="text" id="separator" placeholder="(Optional)" class="form-control" [(ngModel)]="separator">
+      </div>
+      <div class="form-group my-3">
+        <label for="suffix">Append identifier:</label>
+        <input type="checkbox" class="ms-2" [(ngModel)]="addIdentifier" />
+      </div>
+      <button class="btn btn-primary" (click)="generateUsername()"
+        [disabled]="!areAdjectivesLoaded || !areAnimalsLoaded">
+        Generate Username
+      </button>
+    </div>
+
+    @if(username) {
+    <div class="card-footer">
+      <p>Generated username:</p>
+      <p id="guid" class="fw-bold">{{ username }}</p>
+
+      <button class="btn btn-secondary" [ngClass]="{'btn-secondary': !isCopied, 'btn-info': isCopied}"
+        (click)="copyToClipboard()">{{ copyButtonText }}</button>
+    </div>
+    }
+
+  </div>
+
+</div>
