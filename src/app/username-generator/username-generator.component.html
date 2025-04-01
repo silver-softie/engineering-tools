@@ -13,7 +13,10 @@
         <label for="suffix">Append identifier:</label>
         <input type="checkbox" class="ms-2" [(ngModel)]="addIdentifier" />
       </div>
-      <button class="btn btn-primary" (click)="generateUsername()">Generate Username</button>
+      <button class="btn btn-primary" (click)="generateUsername()"
+        [disabled]="!areAdjectivesLoaded || !areAnimalsLoaded">
+        Generate Username
+      </button>
     </div>
 
     @if(username) {

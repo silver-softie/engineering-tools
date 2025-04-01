@@ -13,9 +13,9 @@ import { Clipboard } from '@angular/cdk/clipboard';
 export class UsernameGeneratorComponent implements OnInit {
   private adjectives: string[] = [];
   private animals: string[] = [];
-  private areAdjectivesLoaded: boolean = false;
-  private areAnimalsLoaded: boolean = false;
 
+  areAdjectivesLoaded: boolean = false;
+  areAnimalsLoaded: boolean = false;
   separator: string = '.';
   addIdentifier: boolean = false;
   username: string = '';
