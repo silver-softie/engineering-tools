@@ -69,6 +69,41 @@ export class SimpleEstimateComponent {
     });
   }
 
+  exportEstimate() {
+    // Prepare CSV Headers
+    const taskHeaders = ['Name', 'Complexity', 'Uncertainty', 'Expected', 'WorstCase'];
+    const summaryHeaders = ['', '', '', 'SumExpected', 'SumWorstCase'];
+
+    // Generate CSV Rows for Tasks
+    const taskRows = this.tasks.map(task =>
+      [task.name, task.complexity, task.uncertainty, task.expected, task.worstCase].join(',')
+    );
+
+    // Generate CSV Row for Summary
+    const summaryRow = ['', '', '', this.sumExpected, this.sumWorstCase].join(',');
+
+    // Combine Everything into the CSV Format
+    const csvData = [
+      taskHeaders.join(','), // Task headers
+      ...taskRows, // Task rows
+      '', // Blank line for separation
+      summaryHeaders.join(','), // Summary headers
+      summaryRow, // Summary row
+    ].join('\n');
+
+    // Trigger File Download
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'estimate.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   removeTask(index: number) {
     this.tasks.splice(index, 1);
   }
