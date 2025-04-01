@@ -25,6 +25,9 @@ export class ToolRegistryService {
 
     this.registerComponent('SimpleEstimateComponent', () =>
       import('../simple-estimate/simple-estimate.component').then(m => m.SimpleEstimateComponent));
+
+    this.registerComponent('UsernameGeneratorComponent', () =>
+      import('../username-generator/username-generator.component').then(m => m.UsernameGeneratorComponent));
   }
 
   async getComponentsFromConfig(config: any[]): Promise<Array<{ name: string, component: any }>> {
