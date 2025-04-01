@@ -16,88 +16,104 @@
       </div>
 
       @if(this.tasks.length !== 0) {
-        @for(task of this.tasks; track task; let idx = $index) {
-          <div class="d-table-row">
-    
-            <!-- Task name-->
-            <div class="d-table-cell p-2">
-              <input class="w-100" type="text" [(ngModel)]="task.name" />
-            </div>
-    
-            <!-- Complexity -->
-            <div class="d-table-cell text-center">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle ps-2 pe-2" type="button" id="complexityDropdown"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ Complexity[task.complexity] }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    
-                  @for(key of complexityKeys; track key) {
-                  <li>
-                    <a class="dropdown-item" (click)="updateComplexity(task, key)">
-                      {{ key }}
-                    </a>
-                  </li>
-                  }
-                </ul>
-              </div>
-            </div>
-    
-            <!-- Uncertainty -->
-            <div class="d-table-cell text-center">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle ps-2 pe-2" type="button" id="uncertaintyDropdown"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ Uncertainty[task.uncertainty] }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  @for(key of uncertaintyKeys; track key) {
-                  <li>
-                    <a class="dropdown-item" (click)="updateUncertainty(task, key)">
-                      {{ key }}
-                    </a>
-                  </li>
-                  }
-                </ul>
-              </div>
-            </div>
-    
-            <!-- Expected -->
-            <div class="d-table-cell text-center p-2">
-              {{ task.expected | number:'1.1-1' }}
-            </div>
-    
-            <!-- Worst case-->
-            <div class="d-table-cell text-center p-2">
-              {{ task.worstCase | number:'1.1-1' }}
-            </div>
-    
-            <!-- Delete -->
-            <div class="d-table-cell p-2">
-              <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;"
-                title="Delete task" (click)="removeTask(idx)">
-                ❌
-              </button>
-            </div>
-    
-          </div>
-          }
+      @for(task of this.tasks; track task; let idx = $index) {
+      <div class="d-table-row">
 
-        <div class="d-table-cell"></div>
-        <div class="d-table-cell"></div>
-        <div class="d-table-cell"></div>
-        <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumExpected | number:'1.1-1' }}</div>
-        <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumWorstCase | number:'1.1-1' }}</div>
-          
-      } @else {
-        <div class="d-table-row">
-          <div class="d-table-cell p-2">
-           <p>No tasks added yet.</p>
+        <!-- Task name-->
+        <div class="d-table-cell p-2">
+          <input class="w-100" type="text" [(ngModel)]="task.name" />
+        </div>
+
+        <!-- Complexity -->
+        <div class="d-table-cell text-center">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle ps-2 pe-2" type="button" id="complexityDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{ Complexity[task.complexity] }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+              @for(key of complexityKeys; track key) {
+              <li>
+                <a class="dropdown-item" (click)="updateComplexity(task, key)">
+                  {{ key }}
+                </a>
+              </li>
+              }
+            </ul>
           </div>
         </div>
+
+        <!-- Uncertainty -->
+        <div class="d-table-cell text-center">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle ps-2 pe-2" type="button" id="uncertaintyDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {{ Uncertainty[task.uncertainty] }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              @for(key of uncertaintyKeys; track key) {
+              <li>
+                <a class="dropdown-item" (click)="updateUncertainty(task, key)">
+                  {{ key }}
+                </a>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <!-- Expected -->
+        <div class="d-table-cell text-center p-2">
+          {{ task.expected | number:'1.1-1' }}
+        </div>
+
+        <!-- Worst case-->
+        <div class="d-table-cell text-center p-2">
+          {{ task.worstCase | number:'1.1-1' }}
+        </div>
+
+        <!-- Delete -->
+        <div class="d-table-cell p-2">
+          <button style="color: red; font-size: 14px; background: none; border: none; cursor: pointer;"
+            title="Delete task" (click)="removeTask(idx)">
+            ❌
+          </button>
+        </div>
+
+      </div>
+      }
+
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell"></div>
+      <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumExpected | number:'1.1-1' }}</div>
+      <div class="d-table-cell text-center fw-bold bg-info text-white">{{ sumWorstCase | number:'1.1-1' }}</div>
+
+      } @else {
+      <div class="d-table-row">
+        <div class="d-table-cell p-2">
+          <p>No tasks added yet.</p>
+        </div>
+      </div>
       }
     </div>
-    <button class="btn btn-primary ms-4 me-4 mb-4" (click)="addTask()">Add</button>
+
+
+    <div class="container" mt-4>
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-primary flex-grow-1" (click)="addTask()">
+          <i class="bi bi-plus-circle me-2"></i>Add
+        </button>
+
+        @if (this.tasks.length !== 0) {
+        <button class="btn btn-secondary flex-grow-1" (click)="exportEstimate()">
+          <i class="bi bi-box-arrow-up me-2"></i>Export
+        </button>
+        }
+      </div>
+    </div>
+
+
   </div>
 </div>
