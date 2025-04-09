@@ -17,6 +17,10 @@
       "component": "HtmlEncoderComponent"
     },
     {
+      "name": "npm Dependencies",
+      "component": "NpmDependencyComponent"
+    },
+    {
       "name": "Password Generator",
       "component": "PasswordGeneratorComponent"
     },

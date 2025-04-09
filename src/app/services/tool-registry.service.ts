@@ -28,6 +28,10 @@ export class ToolRegistryService {
 
     this.registerComponent('UsernameGeneratorComponent', () =>
       import('../username-generator/username-generator.component').then(m => m.UsernameGeneratorComponent));
+
+    this.registerComponent('NpmDependencyComponent', () =>
+      import('../npm-dependency/npm-dependency.component').then(m => m.NpmDependencyComponent));
+
   }
 
   async getComponentsFromConfig(config: any[]): Promise<Array<{ name: string, component: any }>> {
