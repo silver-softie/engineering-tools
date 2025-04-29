@@ -19,12 +19,16 @@ export class PasswordGeneratorComponent implements OnInit {
   maxLength: number = 10; // Default maximum length
   prefix: string = '';  // Default prefix
   suffix: string = '';  // Default suffix
+  selectedCapital: string = 'None';
+
   password: string = '';
   isDataLoaded: boolean = false;
   copyButtonText: string = 'Copy to clipboard';
   isCopied: boolean = false;
 
-  constructor(private http: HttpClient, private clipboard: Clipboard) { }
+
+  constructor(private http: HttpClient, private clipboard: Clipboard) {
+  }
 
   ngOnInit(): void {
     this.http.get('words_alpha.txt', { responseType: 'text' }).subscribe(
@@ -39,13 +43,40 @@ export class PasswordGeneratorComponent implements OnInit {
     );
   }
 
+  onCapitalsOptionChange(event: any) {
+    this.selectedCapital = event.target.value;
+    console.log(this.selectedCapital);
+  }
+
   generatePassword(): void {
     if (this.isDataLoaded) {
       const filteredWords = this.words.filter(word => word.length <= this.maxLength);
       const selectedWords = [];
+
       for (let i = 0; i < this.numWords; i++) {
         const randomIndex = Math.floor(Math.random() * filteredWords.length);
-        selectedWords.push(filteredWords[randomIndex]);
+        var word = filteredWords[randomIndex];
+
+        switch (this.selectedCapital) {
+          case 'FirstLetter':
+            console.log('first char');
+            word = word.charAt(0).toUpperCase() + word.slice(1);;
+            break;
+          case 'LastLetter':
+            console.log('last char');
+            word = word.slice(0, word.length - 1) + word.charAt(word.length - 1).toUpperCase();
+            break;
+          case 'RandomLetter':
+            console.log('random char');
+            const randomLetterIndex = Math.floor(Math.random() * word.length);
+            word = word.slice(0, randomLetterIndex) + word.charAt(randomLetterIndex).toUpperCase() + word.slice(randomLetterIndex + 1);
+            break;
+          case 'None':
+            console.log('None');
+            break;
+        }
+
+        selectedWords.push(word);
       }
       this.password = this.prefix + selectedWords.join(this.separator) + this.suffix;
     }
